@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>タイピングゲーム</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="sample.js"></script>
+    <style>
+        .text-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .question {
+            display: flex;
+            font-size: 4vw;
+            font-weight: bold;
+            letter-spacing: 0.25em;
+            text-align: center;
+        }
+        .text {
+            width: 50%;
+            border: 5px solid #000;
+            margin-top: 2rem;
+            font-size: 2vw;
+            letter-spacing: 0.1em;
+            text-align: center;
+        }
+        .marker{
+            background-color: #91dbf1;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="text-container">
+        <div class="question">
+            <span id="entered" class="marker"></span>
+            <span id="remained">JavaScript</span>
+        </div>
+        <input type="text" class="text" id="inputText">
+    </div>
+    <script>
+        'use strict';
+
+        /* enter   → 入力済み(新規)
+   　　　　remaind → 問題文(既存)
+           input   → フォームのから取得した時の値
+   */　　　　　　　　　　　　　　　　
+
+    
+        //問題文リスト(配列)
+        const questions = [
+            'JavaScript',
+            'document',
+            'window',
+            'getElementById',
+            'getElementByIdClassName',
+            'addEventListener',
+        ];
+
+        //とりあえずidから取得
+        const entered = document.getElementById('entered');
+        const remained = document.getElementById('remained');
+        //inputText・・・
+        const inputText = document.getElementById('inputText');
+        
+
+
+        let remainedTextWords = remained.textContent.split('');
+        let enteredTextWords = [];
+        let currentKey;
+        let currentText;
+
+        //新しい問題をランダムにセットする関数
+        const setQuesion = () => {
+            //ここに処理をかく
+
+            //配列　「questions」　の中からランダムで問題文を選ぶ
+　
+            //Math.floor・・・・値は整数で
+            //Math.random() * 10 ・・・10より小さいランダムな数
+            currentKey = Math.floor(Math.random() * questions.length);
+
+            currentText = questions[currentKey];
+            //現在の問題文をリセットして、新しい問題文を表示させる
+            //画面に新しい問題文をセット
+            entered.textContent = '';
+            remained.textContent = currentText;
+
+            //入力要素→inputTextで取り出す
+            inputText.value = '';
+
+            //「入力済みの文字」、「未入力の文字」の配列の文字の中身をリセット
+            enteredTextWords = [];
+            //入力された文字を分解
+            remainedTextWords = currentText.split('');
+        };
+
+
+        //  =>はアロー関数c言語のfunction(){return n}みたいな
+
+        /*入力済み、未入力の配列を作る
+        あってる未入力の1番目の配列削除 かつ　入力済みの配列の最後に追加*/
+
+        /* enter   → 入力済み(新規)
+           remaind → 問題文(既存)　*/
+        
+        document.addEventListener('input', (e) => {
+            if (remainedTextWords[0] === e.data) {
+
+                /*イメージ,プッシュ、ポップ*/ 
+                //入力済み、さいごに1文字追加
+                enteredTextWords.push(remainedTextWords[0]);
+                //未入力の配列の先頭　1文字削除
+                remainedTextWords.shift();
+               
+                console.log('入力済み:' + enteredTextWords);
+                console.log('未入力:' + remainedTextWords);
+
+                /*textContentはHTML要素の中身だけかく*/
+                //HTMLの中身を入れ替えている
+                //入力済み,未入力テキストを連結して画面表示
+                entered.textContent = enteredTextWords.join('');
+                remained.textContent = remainedTextWords.join('');
+
+                if (remainedTextWords.length <= 0) {
+                    console.log('クリア、すべての文字が入力されました。');
+                    setQuesion();//新しい問題文をセットする関数を作って実行
+                }
+
+            }
+            else {
+                console.log('NO');
+            }
+        });
+
+        
+
+    </script>
+</body>
+</html>
