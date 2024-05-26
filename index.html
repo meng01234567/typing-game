@@ -13,6 +13,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            background-color: yellowgreen;
         }
         .question {
             display: flex;
@@ -30,7 +31,20 @@
             text-align: center;
         }
         .marker{
-            background-color: #91dbf1;
+            background-color: pink;
+        }
+        .start0 {
+           
+            font-size: 2vw;
+            font-weight: bold;
+            letter-spacing: 0.25em;
+            text-align: center;
+            height: 300px;
+            
+        }
+        .start1 {
+            
+            background-color: pink;
         }
     </style>
 
@@ -38,9 +52,17 @@
 
 <body>
     <div class="text-container">
+        <div class="start0">
+            半角で文字を入力してみましょう。<br>
+            正解したら、
+            文字が<div class="start1">文字</div>
+               
+
+            に変化します。
+        </div>
         <div class="question">
             <span id="entered" class="marker"></span>
-            <span id="remained">JavaScript</span>
+            <span id="remained">Start</span>
         </div>
         <input type="text" class="text" id="inputText">
     </div>
